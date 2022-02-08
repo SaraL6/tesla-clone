@@ -1,6 +1,17 @@
+@font-face {
+  font-family: 	Gotham-Light;
+  src: url(/public/fonts/GothamLight/GothamLight.otf);
+  
+}
+@font-face {
+  font-family: 	Gotham-Book;
+  src: url(/public/fonts/GothamBook/GothamBook.otf);
+  
+}
+
 *{
   box-sizing: border-box;
-  font-family: 'Rubik', sans-serif;
+  font-family: Gotham-Light;
   color: #393c41 ;
   margin: 0;
   padding: 0;
@@ -9,6 +20,10 @@
 body{
   width: 100%;
   overflow-x:hidden;
+}
+
+a{
+  text-decoration: none;
 }
 
 @keyframes animateDown{
