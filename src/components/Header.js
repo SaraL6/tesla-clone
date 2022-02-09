@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import styled from "styled-components"
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import Fade from 'react-reveal/Fade'
+import { selectCars } from '../features/car/carSlice';
+import { selectSolars } from '../features/solar/solarSlice';
+import { useSelector } from 'react-redux'
+
 
 
 
@@ -11,7 +14,12 @@ function Header() {
 
     const [burgerStatus, setBurgerStatus] = useState(false);
 
+    const changeBurgerStatus = () => {
+        setBurgerStatus(!burgerStatus)
 
+    }
+    const cars = useSelector(selectCars)
+    const solars = useSelector(selectSolars)
 
     return (
 
@@ -20,25 +28,29 @@ function Header() {
                 <img src="/images/logo.svg" alt="" />
             </a>
             <Menu>
-                <a href="#">Model S</a>
-                <a href="#">Model 3</a>
-                <a href="#">Model x</a>
-                <a href="#">Model Y</a>
-                <a href="#">Solar Roof</a>
-                <a href="#">Solar Panels</a>
+                {cars && cars.map((car, index) => (
+                    <a href="#" key={index}>{car}</a>
+                ))}
+
+                {solars && solars.map((solar, index) => (
+                    <a href="#" key={index}>{solar}</a>
+                ))
+                }
+
+
             </Menu>
             <RightMenu>
                 <a href="#">Shop</a>
                 <a href="#">Tesla Account</a>
             </RightMenu>
-            <CustomMenu onClick={() => setBurgerStatus(true)} />
+            <CustomMenu onClick={changeBurgerStatus} />
 
 
 
             <BurgerNav show={burgerStatus}>
 
                 <CloseWrapper>
-                    <CustomClose onClick={() => setBurgerStatus(false)} />
+                    <CustomClose onClick={changeBurgerStatus} />
                 </CloseWrapper>
 
                 <li><a href="#">Existing Inventory</a></li>
@@ -57,8 +69,6 @@ function Header() {
                 <li><a href="#">Investor Relations</a></li>
 
             </BurgerNav>
-
-
 
         </Container>
     )
@@ -123,15 +133,9 @@ padding:20px;
 display:flex;
 flex-direction:column;
 text-align:start;
-transform: ${props => props.show ? 'translateX(0)' : 'translateY(100%)'};
-
--webkit-transition:all 1s ease;
-   -moz-transition:all 1s ease;
-    -ms-transition:all 1s ease;
-     -o-transition:all 1s ease;
-        transition:all 1s ease;
-
-
+transform: ${props => props.show ? 'translateX(0)' : 'translateX(100%)'};
+	transition: transform 0.2s ease-in-out;
+	overflow-y: scroll ;
 li{
         padding:15px 0;
         
@@ -145,7 +149,6 @@ li{
     }
 
 `
-
 const CustomClose = styled(CloseIcon)`
 cursor:pointer;
 `
